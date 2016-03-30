@@ -26,7 +26,7 @@ EPEL_MIRROR=mirror.aarnet.edu.au/pub/epel
 
 BASE_ARCH=x86_64
 
-EXCLUDES="--exclude=4/ --exclude=4AS/ --exclude=4ES/ --exclude=4WS/ --exclude=5/ --exclude=5Client/ --exclude=5Server/ --exclude=6Server/ --exclude=testing/ --exclude=ppc/ --exclude=ppc64/ --exclude=SRPMS/ --exclude=x86_64/debug/ --exclude=i386/" 
+EXCLUDES="--exclude=4/ --exclude=4AS/ --exclude=4ES/ --exclude=4WS/ --exclude=5/ --exclude=5Client/ --exclude=5Server/ --exclude=6/ --exclude=6Server/ --exclude=testing/ --exclude=ppc/ --exclude=ppc64/ --exclude=SRPMS/ --exclude=x86_64/debug/ --exclude=i386/" 
 
 
 if [ ! -d ${LOCAL_MIRROR} ]; then
