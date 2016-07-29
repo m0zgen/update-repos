@@ -5,15 +5,21 @@
 # created by Yevgeniy Goncharov aka xck, Email - g.yevgeniy.p@gmail.com, Site - http://sys-admin.kz
 
 #Variables
-DATE=`date +%Y%m%d%H%m`
-LOG=/var/log/update-centos/update-epel-mirror-${DATE}.log
+# DATE=`date +%Y%m%d%H%m`
+LOG="/var/log/update-epel.log"
 CURRENT_DIR=`pwd`
+
+# check log file
+if [[ ! -e $LOG ]]; then
+	touch $LOG
+fi
 
 #Variables - mirror
 LOCAL_MIRROR_BASE=/mnt/repodata/epel
 LOCAL_MIRROR=${LOCAL_MIRROR_BASE}/
 #
-EPEL_MIRROR=mirror.aarnet.edu.au/pub/epel
+#EPEL_MIRROR=mirror.aarnet.edu.au/pub/epel
+EPEL_MIRROR=mirror.pnl.gov/epel
 
 #rsync -vaH --exclude=4/ --exclude=4AS/ --exclude=4ES/ --exclude=4WS/ --exclude=5/ --exclude=5Client/ --exclude=5Server/ --numeric-ids --delete --delete-after --delay-updates  rsync://mirror.aarnet.edu.au/pub/epel/ /data/updates/epel/
 
@@ -26,7 +32,7 @@ EPEL_MIRROR=mirror.aarnet.edu.au/pub/epel
 
 BASE_ARCH=x86_64
 
-EXCLUDES="--exclude=4/ --exclude=4AS/ --exclude=4ES/ --exclude=4WS/ --exclude=5/ --exclude=5Client/ --exclude=5Server/ --exclude=6/ --exclude=6Server/ --exclude=testing/ --exclude=ppc/ --exclude=ppc64/ --exclude=SRPMS/ --exclude=x86_64/debug/ --exclude=i386/" 
+EXCLUDES="--exclude=4/ --exclude=4AS/ --exclude=4ES/ --exclude=4WS/ --exclude=5/ --exclude=5Client/ --exclude=5Server/  --exclude=6/ --exclude=6Server/ --exclude=testing/ --exclude=ppc/ --exclude=ppc64/ --exclude=SRPMS/ --exclude=x86_64/debug/ --exclude=i386/" 
 
 
 if [ ! -d ${LOCAL_MIRROR} ]; then
@@ -39,11 +45,11 @@ echo "attempting EPEL repo update from ${EPEL_MIRROR} to ${LOCAL_MIRROR} ..."
 rsync -vaH ${EXCLUDES} --numeric-ids --delete --delete-after --delay-updates  rsync://${EPEL_MIRROR}/ ${LOCAL_MIRROR}
 if [ $? -ne 0 ]
 then
-        echo "EPEL mirror update FAILED" >> ${LOG}
+        echo "$(date +%d-%m-%Y-%H:%M:%S) EPEL mirror update FAILED" >> ${LOG}
 else
-	echo "EPEL mirror update successful" >> ${LOG}
+	echo "$(date +%d-%m-%Y-%H:%M:%S) EPEL mirror update successful" >> ${LOG}
 fi
 
-/bin/cat ${LOG}
+# /bin/cat ${LOG}
 
 exit 0
